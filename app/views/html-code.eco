@@ -1,0 +1,1 @@
+<div style="float: left; padding: 1em; text-align: center;"><img src="<%= @src %>" /><br/><a href="http://editor.mantike.pro/"><img src="http://static.mantike.pro/img/editor100x15.png" /></a></div>

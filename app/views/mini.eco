@@ -1,0 +1,1 @@
+<img class="card" src="/decks/<%= @deck %>/mini/<%= @card %>.<%= @ext %>" data-card="<%= @card %>" />

@@ -1,0 +1,7 @@
+*~
+*.pyc
+*.pyo
+node_modules
+public/spreads
+public/decks
+.ropeproject

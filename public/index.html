@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Tarot Spread Typewriter</title>
+    <meta
+      name="keywords"
+      content="Tarot, Таро, расклады, рисование раскладов, картинка расклада, редактор раскладов, онлайн редактор раскладов"
+    />
+    <meta name="description" content="Редактор раскладов на Таро" />
+    <meta
+      name="author"
+      content="Ruslan Prokopchuk, Katerina Prokopchuk, Руслан Прокопчук, Катерина Прокопчук"
+    />
+    <meta name="copyright" content="August 2012" />
+    <link
+      rel="stylesheet"
+      href="http://static.mantike.pro/css/jquery-ui/pepper-grinder/jquery-ui.min.css"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="application.css?1" type="text/css" />
+    <script
+      src="http://static.mantike.pro/js/modernizr.mq.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="http://static.mantike.pro/js/html5slider.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="http://static.mantike.pro/js/jscolor.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="http://static.mantike.pro/js/underscore.min.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="http://static.mantike.pro/js/kinetic.min.js?4.4.3"
+      type="text/javascript"
+    ></script>
+    <script
+      src="application.js?v134"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    <script type="text/javascript">
+      var jQuery = require("jqueryify");
+      var exports = this;
+      jQuery(function() {
+        var App = require("index");
+        exports.app = new App({ el: $("#tarot") });
+        //jQuery(this).joyride({
+        //    'tipContent': '#help-tour'
+        //  });
+      });
+    </script>
+    <script
+      type="text/javascript"
+      src="http://w.sharethis.com/button/buttons.js"
+    ></script>
+    <script type="text/javascript">
+      stLight.options({
+        publisher: "e37df187-f6a9-4402-8b76-85d77b2f095a",
+        doNotHash: true,
+        doNotCopy: true,
+        hashAddressBar: false
+      });
+    </script>
+  </head>
+  <body class="vbox">
+    <header>
+      <h1>
+        <a href="/" title="Редактор раскладов на Таро"
+          >Редактор раскладов на Таро</a
+        ><sup><small>v134</small></sup>
+      </h1>
+      <h1><a href="#tour" rel="nofollow">Справка</a></h1>
+      <h1><a href="http://blog.mantike.pro/?page_id=21">Mantike Journal</a></h1>
+      <h1><a href="mailto:editor@mantike.pro">Почта</a></h1>
+      <h1><a href="#decks">Список колод</a></h1>
+    </header>
+    <div id="tarot" class="vbox">
+      <div class="deck panel hbox">
+        <div class="suits vbox" id="v-suits"></div>
+        <div class="vbox boxFlex">
+          <div class="cards boxFlex" id="cards"></div>
+          <div class="suits hbox" id="h-suits"></div>
+          <p id="deck-status"></p>
+          <div class="hbox">
+            <div class="spacer"></div>
+            <div class="buttons vbox center">
+              <a id="foretell-1" rel="nofollow">случайная карта</a>
+              <label>
+                <input id="is-foretell-with-reversed" type="checkbox" /> с
+                перевёрнутыми?
+              </label>
+            </div>
+            <div class="spacer"></div>
+            <div class="buttons vbox">
+              <label>сменить колоду:</label>
+              <div class="hbox">
+                <input
+                  id="select-deck"
+                  type="search"
+                  placeholder="название колоды"
+                />
+                <!-- <a id="ttt" href="http://ttt.mantike.pro">Прозрачное Таро</a> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--
+    <div class="news panel hbox center">
+      <a href="http://blog.mantike.pro/?p=1232" style="text-decoration:none;" class="ga-track-click" data-ga-category="Link@Editor" data-ga-action="blog/1232" target="_blank">Годовая статистика популярности колод</a>
+    </div> -->
+      <div class="panel hbox center">
+        <div class="buttons vbox">
+          <header>карты</header>
+          <label>все</label>
+          <a id="reset-cards" rel="nofollow">убрать</a>
+          <label>выделенная</label>
+          <a id="remove-card" rel="nofollow">убрать</a>
+          <a id="up-card" rel="nofollow">поднять</a>
+          <a id="down-card" rel="nofollow">опустить</a>
+          <a id="mirror-card" rel="nofollow">отзеркалить</a>
+          <a id="turn-card" rel="nofollow">перевернуть</a>
+          <a id="cw-card" rel="nofollow">по часовой</a>
+          <a id="ccw-card" rel="nofollow">против часовой</a>
+          <label>
+            <input id="is-precise-rotation" type="checkbox" /> по градусу?
+          </label>
+        </div>
+        <div class="vbox boxFlex">
+          <div class="buttons hbox center">
+            масштаб:
+            <input
+              id="stage-scale"
+              style="width:75%;"
+              type="range"
+              min="20"
+              max="400"
+              value="100"
+            /><span>100%</span>
+          </div>
+          <div class="hbox center">
+            <div id="canvas"></div>
+          </div>
+          <div class="vbox">
+            <div class="buttons hbox center">
+              <a id="get-link" rel="nofollow">получить ссылку на картинку</a>
+              <a id="open-link" href="#" target="_blank" rel="nofollow"
+                >открыть картинку</a
+              >
+              <input
+                id="link"
+                size="30"
+                type="url"
+                readonly="readonly"
+                onclick="if (!/(iPad|iPhone|iPod)/g.test(navigator.userAgent)) this.select();"
+              />
+              <a
+                id="html-code"
+                rel="nofollow"
+                title="Чтобы запостить в ЖЖ или ещё куда-нибудь"
+                >HTML</a
+              >
+              <a id="bb-code" rel="nofollow" title="Чтобы запостить на форум"
+                >BBCode</a
+              >
+            </div>
+            <div id="snippet" class="hbox center" style="text-align: center;">
+              <textarea
+                cols="60"
+                rows="4"
+                readonly="readonly"
+                onclick="if (!/(iPad|iPhone|iPod)/g.test(navigator.userAgent)) this.select();"
+              ></textarea>
+            </div>
+            <div class="buttons hbox center">
+              <a id="feedback" href="http://blog.mantike.pro/?page_id=51"
+                >оставить отзыв</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="buttons vbox">
+          <header>ярлычки</header>
+          <a id="toggle-label-type" rel="nofollow"
+            ><span class="o1 active">номер</span> /
+            <span class="o2">текст</span></a
+          >
+          <input
+            id="label-font-size"
+            type="range"
+            min="12"
+            max="120"
+            value="20"
+          />
+          <div class="chbox">
+            <a id="add-label" rel="nofollow">добавить</a>
+            <a id="remove-label" rel="nofollow">удалить</a>
+          </div>
+          <input id="label-color" class="color" size="6" />
+          <a id="refill-labels" rel="nofollow">перекрасить все</a>
+          <hr />
+          <header>полотно</header>
+          <label>фон</label>
+          <input id="bg-color" class="color" size="6" />
+          <a id="transparent-bg" rel="nofollow">прозрачный</a>
+          <label>сетка</label>
+          <a id="toggle-grid" rel="nofollow">показать</a>
+          <a id="toggle-snap" rel="nofollow">прилипание</a>
+        </div>
+      </div>
+    </div>
+    <div id="decklist" class="panel">
+      <p>
+        Ниже приведён список всех колод редактора в том виде, в котором они
+        появляются в выпадающем списке поиска колод. Для краткости из всех
+        названий убраны слова Tarot / Таро и Оракул / Oracle. Каждая запись —
+        ссылка, по ней вы можете перейти к соответствующей колоде. Если вы
+        заметили неточность в названии колоды —
+        <a href="mailto:editor@mantike.pro">напишите нам,</a> и мы внесём
+        поправки.
+      </p>
+    </div>
+    <div id="sharethis" class="hbox center">
+      <span class="st_facebook_large" displayText="Facebook"></span>
+      <span class="st_twitter_large" displayText="Tweet"></span>
+      <span class="st_livejournal_large" displayText="LiveJournal"></span>
+      <span class="st_vkontakte_large" displayText="Vkontakte"></span>
+      <span class="st_odnoklassniki_large" displayText="Odnoklassniki"></span>
+      <span class="st_google_reader_large" displayText="Google Reader"></span>
+      <span class="st_googleplus_large" displayText="Google +"></span>
+      <span class="st_evernote_large" displayText="Evernote"></span>
+    </div>
+    <footer class="vbox">
+      <h5 class="hbox center">
+        &copy;&nbsp;2012&nbsp;<a href="http://telemach.livejournal.com"
+          >KaRus</a
+        >
+      </h5>
+      <h6 class="hbox center">
+        Сделано с <span class="hearts">&hearts;</span> в Севастополе
+      </h6>
+    </footer>
+    <ol id="help-tour">
+      <li data-id="select-deck" data-text="Дальше">
+        <p>
+          Начните набирать название колоды на английском или русском языке с
+          любого слова, из появившихся вариантов выберите нужный.
+        </p>
+      </li>
+      <li data-id="ttt" data-text="Дальше">
+        <p>
+          Или перейдите в специализированный редактор для Прозрачного Таро, если
+          вы хотите работать с этой колодой.
+        </p>
+      </li>
+      <li data-id="v-suits" data-text="Дальше">
+        <p>Нажмите на значок, чтобы выбрать СА или масть.</p>
+      </li>
+      <li data-id="cards" data-text="Дальше">
+        <p>Нажмите на карту, чтобы она появилась на полотне.</p>
+      </li>
+      <li data-id="foretell-1" data-text="Дальше">
+        <p>Или вытащите случайную карту из текущей колоды.</p>
+      </li>
+      <li data-id="is-foretell-with-reversed" data-text="Дальше">
+        <p>Если вы работаете с перевёрнутыми картами, то поставьте галочку.</p>
+      </li>
+      <li data-id="stage-scale" data-text="Дальше">
+        <p>Изменение масштаба картинки «мышью».</p>
+      </li>
+      <li data-id="reset-cards" data-text="Дальше">
+        <p>Удалить все карты с полотна.</p>
+      </li>
+      <li data-id="remove-card" data-text="Дальше">
+        <p>Удалить карту, выделенную «мышкой».</p>
+      </li>
+      <li data-id="up-card" data-text="Дальше">
+        <p>Поднять выделенную карту вверх на 1 уровень.</p>
+      </li>
+      <li data-id="down-card" data-text="Дальше">
+        <p>Опустить выделенную карту вниз на 1 уровень.</p>
+      </li>
+      <li data-id="mirror-card" data-text="Дальше">
+        <p>Отзеркалить выделенную карту.</p>
+      </li>
+      <li data-id="turn-card" data-text="Дальше">
+        <p>Перевернуть выделенную карту на 180˚</p>
+      </li>
+      <li data-id="cw-card" data-text="Дальше">
+        <p>
+          Вращать выделенную карту по часовой стрелке с интервалом 15˚ или 1˚
+          (галочка «по градусам?»)
+        </p>
+      </li>
+      <li data-id="ccw-card" data-text="Дальше">
+        <p>
+          Вращать выделенную карту против часовой стрелки с интервалом 15˚ или
+          1˚ (галочка «по градусам?»)
+        </p>
+      </li>
+      <li data-id="is-precise-rotation" data-text="Дальше">
+        <p>Вращать выделенную карту с интервалом 1˚</p>
+      </li>
+      <li data-id="toggle-label-type" data-text="Дальше">
+        <p>Выбрать тип ярлычка: с номером или с текстом.</p>
+      </li>
+      <li data-id="label-font-size" data-text="Дальше">
+        <p>Установить размер шрифта для ярлычка.</p>
+      </li>
+      <li data-id="add-label" data-text="Дальше">
+        <p>
+          Добавить ярлычок с номером (каждый клик добавляет ярлычок со следующим
+          по порядку номером) или текстом.
+        </p>
+      </li>
+      <li data-id="remove-label" data-text="Дальше">
+        <p>Удалить последний добавленный ярлычок.</p>
+      </li>
+      <li data-id="label-color" data-text="Дальше">
+        <p>Выбрать цвет для следующего ярлычка.</p>
+      </li>
+      <li data-id="refill-labels" data-text="Дальше">
+        <p>Перекрасить все ярлычки в выбранный цвет.</p>
+      </li>
+      <li data-id="bg-color" data-text="Дальше"><p>Выбрать цвет фона.</p></li>
+      <li data-id="transparent-bg" data-text="Дальше">
+        <p>Выбрать/отключить прозрачность фона.</p>
+      </li>
+      <li data-id="toggle-grid" data-text="Дальше">
+        <p>Показать/скрыть сетку на полотне.</p>
+      </li>
+      <li data-id="toggle-snap" data-text="Дальше">
+        <p>Выбрать/отключить прилипание карт к ближайшим ячейкам сетки.</p>
+      </li>
+      <li data-id="get-link" data-text="Дальше">
+        <p>Нажмите, чтобы получить адрес ссылки на картинку.</p>
+      </li>
+      <li data-id="feedback" data-text="Закончить">
+        <p>
+          Мы будем рады, если вы напишете нам о своих впечатлениях, расскажете о
+          замеченной ошибке или предложите улучшение!
+        </p>
+      </li>
+    </ol>
+  </body>
+</html>
