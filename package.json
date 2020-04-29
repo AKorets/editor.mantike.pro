@@ -1,5 +1,6 @@
 {
   "name": "se",
+	"target": "node",
   "version": "0.0.1",
   "dependencies": {
     "serveup": "~0.0.5",

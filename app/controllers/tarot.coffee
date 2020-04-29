@@ -191,7 +191,7 @@ class Tarot extends Spine.Controller
       $suit.addClass 'suit'
       if suit.icon
         if suit.icon[0] is '/'
-          path = 'http://static.mantike.pro/img'
+          path = 'img-suit'
         else
           path = ['/img/', @suitcase, '/'].join('')
         $suit.css('background-image', "url(#{path}#{suit.icon})")
@@ -470,7 +470,7 @@ class Tarot extends Spine.Controller
         contentType: 'text/plain'
         dataType: 'text'
         success: (id) =>
-          url = "http://editor.mantike.pro/spreads/#{id}"
+          url = "spreads/#{id}"
           @$link.val(url)
           @$link.select() unless /(iPad|iPhone|iPod)/g.test navigator.userAgent
           @$open_link.attr 'href', url

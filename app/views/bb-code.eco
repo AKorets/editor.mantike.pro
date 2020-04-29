@@ -1,2 +1,2 @@
 [img]<%= @src %>[/img]
-[url=http://editor.mantike.pro/][img]http://static.mantike.pro/img/editor100x15.png[/img][/url]
+[url=./][img]img/editor100x15.png[/img][/url]
