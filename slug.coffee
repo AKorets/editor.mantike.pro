@@ -28,7 +28,8 @@ config =
 			"static-js": "static.mantike.pro/js",
 			"css-jquery":"static.mantike.pro/css/jquery-ui/pepper-grinder",
 			"img-suit":"static.mantike.pro/img",
-			"jscolor-img":"static.mantike.pro/img"
+			"jscolor-img":"static.mantike.pro/img",
+			"decks":"static.mantike.pro/decks"
 		#css:
         
         #css : './css/index'
